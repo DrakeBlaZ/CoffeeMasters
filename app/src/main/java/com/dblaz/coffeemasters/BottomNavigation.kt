@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,17 +26,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dblaz.coffeemasters.ui.theme.Alternative1
+import com.dblaz.coffeemasters.ui.theme.Alternative2
 import com.dblaz.coffeemasters.ui.theme.OnPrimary
 import com.dblaz.coffeemasters.ui.theme.Primary
+import com.dblaz.coffeemasters.ui.theme.Secondary
 import kotlinx.coroutines.selects.select
 
 data class NavPage(var name: String, var icon: ImageVector, var route: String)
 
 object Routes {
     val MenuPage = NavPage("Menu", Icons.Outlined.Menu, "menu")
-    val OffersPage = NavPage("Offers", Icons.Outlined.Star, "menu")
-    val OrderPage = NavPage("My Order", Icons.Outlined.ShoppingCart, "menu")
-    val InfoPage = NavPage("Info", Icons.Outlined.Info, "menu")
+    val OffersPage = NavPage("Offers", Icons.Outlined.Star, "offers")
+    val OrderPage = NavPage("My Order", Icons.Outlined.ShoppingCart, "order")
+    val InfoPage = NavPage("Info", Icons.Outlined.Info, "info")
 
     val pages = listOf(MenuPage, OffersPage, OrderPage, InfoPage)
 
@@ -45,9 +48,11 @@ object Routes {
 fun NavBar(selectedRoute: String = Routes.MenuPage.route,
                 onChange: (String)->Unit){
     Row(
+        horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary)
+            .background(Primary)
+            .padding(16.dp)
     ) {
         for (page in Routes.pages){
             NavBarItem(page = page,
@@ -67,7 +72,7 @@ fun NavBarItem(page: NavPage, selected: Boolean = false, modifier: Modifier = Mo
             imageVector = page.icon,
             contentDescription = page.name,
             colorFilter = ColorFilter.tint(
-                if (selected) Alternative1 else OnPrimary
+                if (selected) OnPrimary else Alternative2
             ),
             modifier = Modifier
                 .padding(bottom = 8.dp)
@@ -75,7 +80,7 @@ fun NavBarItem(page: NavPage, selected: Boolean = false, modifier: Modifier = Mo
         )
         Text(page.name,
             fontSize = 12.sp,
-            color = if (selected) Alternative1 else OnPrimary
+            color = if (selected) OnPrimary else Alternative2
         )
     }
 }

@@ -1,8 +1,5 @@
-package com.dblaz.coffeemasters
+package com.dblaz.coffeemasters.pages
 
-import android.os.Build
-import android.widget.Space
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,13 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.dblaz.coffeemasters.ui.theme.Alternative1
-import java.time.format.TextStyle
+import com.dblaz.coffeemasters.ui.theme.Alternative2
+import com.dblaz.coffeemasters.R
+
 
 /**@Preview(showBackground = true, widthDp = 400)
 @Composable
@@ -34,10 +29,9 @@ private fun Offer_Preview(){
     Offer("My_Title", "This is the description")
 }
 **/
-@Preview(showBackground = true)
 @Composable
 fun OffersPage(){
-    Column(Modifier.verticalScroll(rememberScrollState())) {
+    Column(Modifier.padding(top = 48.dp, bottom = 48.dp).verticalScroll(rememberScrollState())) {
         Offer("Early Coffee", "10% off. Offer valid from 6 am to 9 am.")
         Offer("Welcome Gift", "25/ off on your first order")
         Offer("Early Coffee", "10% off. Offer valid from 6 am to 9 am.")
@@ -68,7 +62,7 @@ fun Offer(title: String, description: String){
         ){
             Text(text = title,
                 modifier = Modifier
-                    .background(Alternative1)
+                    .background(Alternative2)
                     .padding(16.dp),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
@@ -76,7 +70,7 @@ fun Offer(title: String, description: String){
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = description,
                 modifier = Modifier
-                    .background(Alternative1)
+                    .background(Alternative2)
                     .padding(16.dp),
                 style = MaterialTheme.typography.titleMedium)
         }

@@ -25,14 +25,6 @@ import com.dblaz.coffeemasters.pages.OrderPage
 import com.dblaz.coffeemasters.ui.theme.CoffeeMastersTheme
 import com.dblaz.coffeemasters.ui.theme.Primary
 
-@Preview
-@Composable
-fun App_Preview(){
-    CoffeeMastersTheme {
-        App()
-    }
-}
-
 
 @Composable
 fun AppTitle() {
@@ -50,7 +42,7 @@ fun AppTitle() {
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun App() {
+fun App(dataManager: DataManager) {
     var selectedRoute = remember {
         mutableStateOf("menu")
     }
@@ -61,9 +53,9 @@ fun App() {
 
         content = {
             when(selectedRoute.value){
-                Routes.MenuPage.route -> MenuPage()
+                Routes.MenuPage.route -> MenuPage(dataManager)
                 Routes.OffersPage.route -> OffersPage()
-                Routes.OrderPage.route -> OrderPage()
+                Routes.OrderPage.route -> OrderPage(dataManager)
                 Routes.InfoPage.route -> InfoPage()
             }
         },

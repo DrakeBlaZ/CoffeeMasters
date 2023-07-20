@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -23,25 +24,36 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.dblaz.coffeemasters.DataManager
 import com.dblaz.coffeemasters.Product
 import com.dblaz.coffeemasters.R
 import com.dblaz.coffeemasters.ui.theme.Alternative1
 import com.dblaz.coffeemasters.ui.theme.CardBackground
+import com.dblaz.coffeemasters.ui.theme.Primary
 
-@Preview
+
 @Composable
-fun MenuPage(){
+fun MenuPage(dataManager: DataManager){
     LazyColumn{
-        items(5){
-            Card(
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier
-                    .background(CardBackground)
-                    .padding(12.dp)
-            ) {
-                ProductItem(product = Product(1, "Dummy", price = 1.25, ""), onAdd = {})
+        items(dataManager.menu){
+            Text(it.name,
+                color = Primary,
+                modifier = Modifier.padding(10.dp,20.dp,10.dp,10.dp))
+            it.products.forEach{
+                Card(
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .background(CardBackground)
+                        .padding(12.dp)
+                ) {
+                    ProductItem(it, onAdd = {
+                        dataManager.cartAdd(it)
+                    })
+                }
             }
         }
+
 
     }
 }
@@ -60,8 +72,8 @@ fun ProductItem(product: Product, onAdd: (Product)->Unit ){
             .fillMaxWidth()
             .background(Color.White)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.black_coffee),
+        AsyncImage(
+            model = product.imageUrl,
             contentDescription = "Image for ${product.name}",
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
